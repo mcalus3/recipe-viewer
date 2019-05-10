@@ -1,11 +1,11 @@
-const Webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const Webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const path = require('path')
+const path = require('path');
 
 const dir = (...paths) => {
-  return path.join(__dirname, ...paths)
-}
+  return path.join(__dirname, ...paths);
+};
 
 module.exports = {
   context: __dirname,
@@ -14,18 +14,10 @@ module.exports = {
   devtool: 'source-map',
   watch: true,
   resolve: {
-    extensions: [
-      '.js',
-      '.css'
-    ],
-    modules: [
-      dir('src'),
-      dir('node_modules'),
-    ]
+    extensions: ['.js', '.css'],
+    modules: [dir('src'), dir('node_modules')]
   },
-  entry: [
-    dir('src', 'index.js'),
-  ],
+  entry: [dir('src', 'index.js')],
   output: {
     filename: 'index.js'
   },
@@ -61,13 +53,13 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               config: {
-                path: dir('postcss.config.js'),
-              },
-            },
-          },
-        ],
-      },
-    ],
+                path: dir('postcss.config.js')
+              }
+            }
+          }
+        ]
+      }
+    ]
   },
   plugins: [
     new Webpack.LoaderOptionsPlugin({
@@ -78,8 +70,8 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify('development')
     }),
     new HtmlWebpackPlugin({
-      title: 'Nozbe',
+      title: 'recipe-viewer',
       template: dir('index.ejs')
     })
   ]
-}
+};
