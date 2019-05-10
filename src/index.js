@@ -1,6 +1,6 @@
-import React from 'react'
-import { render } from 'react-dom'
+import React from 'react';
+import { render } from 'react-dom';
 
-import Root from 'components/Root'
+import App from 'components/App';
 
-render(<Root />, document.getElementById('application'))
+render(<App />, document.getElementById('application'));
