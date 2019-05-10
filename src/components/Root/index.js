@@ -7,23 +7,9 @@ import {
   actions,
   queryStates
 } from '../../utils/stateMamagement.js';
-
-const App = props => {
+import SearchBar from '../SearchBar';
+const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  //test
-  useEffect(() => {
-    dispatch({ type: actions.setIngeredients, payload: ['onion', 'garlic'] });
-    dispatch({ type: actions.setQueryState, payload: queryStates.pending });
-    setTimeout(() => {
-      dispatch({
-        type: actions.setIngeredients,
-        payload: ['potato', 'garlic']
-      });
-      dispatch({ type: actions.setQueryState, payload: queryStates.pending });
-    }, 2000);
-  }, []);
-  //
 
   useEffect(() => {
     if (state.queryState === queryStates.pending) {
@@ -49,8 +35,13 @@ const App = props => {
   return (
     <div className={style.root}>
       <h2>Welcome to recipe viewer!</h2>
-      {state.recipes.map(recipe => (
-        <p key={recipe.title}>{recipe.title}</p>
+      <SearchBar
+        ingredients={state.query.ingredients}
+        queryState={state.queryState}
+        dispatch={dispatch}
+      />
+      {state.recipes.map((recipe, index) => (
+        <p key={recipe.title + index}>{recipe.title}</p>
       ))}
     </div>
   );
