@@ -11,7 +11,7 @@ function getRecipes(query) {
         `https://cors-anywhere.herokuapp.com/http://www.recipepuppy.com/api/?` +
           queryString,
         {
-          timeout: 5
+          timeout: 5000
         }
       );
       if (response.status === 200) {
