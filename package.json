@@ -1,9 +1,10 @@
 {
-  "name": "nozbe-rekrutacja",
+  "name": "recipe-viewer",
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "node ./webpack.server"
+    "dev": "node ./webpack.server",
+    "build": "webpack"
   },
   "engines": {
     "node": ">=10"

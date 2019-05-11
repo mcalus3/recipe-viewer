@@ -22,7 +22,6 @@ function getRecipes(query) {
         const sortedRecipes = recipiesWithSplitIngredients
           .map(r => ({ ...r, title: r.title.trim() }))
           .sort((a, b) => compareByTitle(a, b));
-        console.log(recipiesWithSplitIngredients, sortedRecipes);
         return resolve(sortedRecipes);
       } else {
         return reject('Request failed');
