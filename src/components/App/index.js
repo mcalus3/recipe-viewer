@@ -6,8 +6,10 @@ import {
   initialState,
   actions,
   queryStates
-} from '../../utils/stateMamagement.js';
+} from '../../utils/stateManagement.js';
 import SearchBar from '../SearchBar';
+import RecipesList from '../RecipesList';
+
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -31,18 +33,19 @@ const App = () => {
         });
     }
   }, [state.queryState]);
-
   return (
-    <div className={style.root}>
-      <h2>Welcome to recipe viewer!</h2>
+    <div>
+      <h2 className={style.title}>Welcome to recipe viewer!</h2>
       <SearchBar
         ingredients={state.query.ingredients}
         queryState={state.queryState}
         dispatch={dispatch}
       />
-      {state.recipes.map((recipe, index) => (
-        <p key={recipe.title + index}>{recipe.title}</p>
-      ))}
+      <RecipesList
+        recipes={state.recipes}
+        page={state.query.page}
+        dispatch={dispatch}
+      />
     </div>
   );
 };

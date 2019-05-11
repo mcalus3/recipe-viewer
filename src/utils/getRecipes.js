@@ -15,9 +15,14 @@ function getRecipes(query) {
         }
       );
       if (response.status === 200) {
-        const sortedRecipes = response.data.results.sort((a, b) =>
-          compareByTitle(a, b)
-        );
+        const recipiesWithSplitIngredients = response.data.results.map(r => ({
+          ...r,
+          ingredients: r.ingredients.split(',').map(i => i.trim())
+        }));
+        const sortedRecipes = recipiesWithSplitIngredients
+          .map(r => ({ ...r, title: r.title.trim() }))
+          .sort((a, b) => compareByTitle(a, b));
+        console.log(recipiesWithSplitIngredients, sortedRecipes);
         return resolve(sortedRecipes);
       } else {
         return reject('Request failed');

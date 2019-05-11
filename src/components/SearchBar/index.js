@@ -1,11 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { actions } from '../../utils/stateManagement.js';
 import style from './style';
-import {
-  reducer,
-  initialState,
-  actions,
-  queryStates
-} from '../../utils/stateMamagement.js';
 
 const SearchBar = ({ ingredients, queryState, dispatch }) => {
   const ingredientsInput = React.createRef();
@@ -17,9 +12,16 @@ const SearchBar = ({ ingredients, queryState, dispatch }) => {
     event.preventDefault();
   }
 
+  useEffect(() => {
+    if (ingredientsInput.current.value !== ingredients.join(', ')) {
+      ingredientsInput.current.value = ingredients.join(', ');
+    }
+  });
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={style.root}>
       <label>Enter ingredients delimited by comma:</label>
+      <br />
       <input
         defaultValue={ingredients.join(', ')}
         type="text"
