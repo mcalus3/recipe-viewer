@@ -1,39 +1,29 @@
-# Zadanie rekrutacyjne
+# recipe-viewer
 
-### Tryb developerski
+This is a recipe viewer. It shows you a list of recipes that contain ingredients specified by you.
 
-1. Zainstaluj `yarn` (komenda: `npm install -g yarn`)
-2. Zainstaluj zależności za pomocą komendy `yarn`
-3. Uruchom komendę `yarn dev`
-4. Odpal w przeglądarce <http://localhost:4000>
+# Dev documentation
 
-### Wymagania
+**Structure**
 
-Na podstawie danych zwracanych z API serwisu Recipe Puppy (<http://www.recipepuppy.com/about/api/>) napisz prostą aplikację, która będzie wyświetlała wyniki wyszukiwania. W aplikacji skorzystaj z końcówki `/api` (przykłady znajdziesz poniżej).
+This app is made with React and Axios libraries.
 
-Aplikacja musi się składać z wyszukiwarki, listy wyników oraz stronnicowania.
+Its component structure looks like this:
 
-**Wyszukiwarka**
+App  
+|--SearchBar (ingredients list input, button and status text)  
+|  
+|--List (header, items and pagination footer)  
+....|--ListItem (name (link), ingredients list, thumbnail)
 
-- w polu wyszukiwarki wpisujemy nazwę składnika lub składników (po przecinku), przykład dla `onion`:  `/api/?q=onion&p=1`
-- wyszukiwanie powinno się rozpoczynać na przycisk `enter` lub kliknięcie w przycisk `Search`
+There is also a module acting as a facade for the recipes source with one method - `getRecipies(query)`. It executes a request to the _recipe puppy_ web api and returns a promise that resolves to the recipes list deserialized from response (sorted alphabetically), or error if there was any problem with fetching (timeout or error in response from the recipe puppy).
 
-**Lista wyników**
+**How application state is managed?**
 
-- wyświelamy placeholder, gdy brak wyników wyszukiwania
-- przepisy na liście muszą być posortowane po nazwie (rosnąco)
-- każda pozycja na liście powinna zawierać: nazwę (link), listę składników oraz miniaturkę
-- kliknięcie na składnik w widoku pojedynczego elementu na liście powinno uzupełnić pole wyszukiwarki i uruchomić wyszukiwanie z tym składnikiem
+In the App component there is a `useEffect` hook that handles calling the `getRecipies` method (at the start and when it's requested by the user). After promise is resolved, it saves new recipies data in its state and toggles re-render of the children.
 
-**Stronnicowanie**
+**Notes**
 
-- wyświetlamy maksymalnie 10 pozycji na liście wyników
-- patrz parametry `p` w powyższym przykładzie `/api/?q=onion&p=1`
+1. I had to enable async/await support in babel, so I installed a babel plugin. It took me a while to learn how the babel works (never done this before).
 
-### Inne
-
-Preferujemy zapis funkcyjny komponentów (patrz `components/Root`), lecz jeśli nie miałeś z tym do czynienia to napisz zadanie tak jak Ci wygodnie :) Nie sugerujemy również wyboru bibliotek do stylowania komponentów (skonfigurowany jest jedynie podstawowy PostCSS), jeśli preferujesz `styled-components`, `emotion` lub coś podobnego, wykorzystaj to! Również nie sugerujemy sposobu pisania komponentów, HOCs, render props, hooks? Wybór należy do Ciebie! :)
-
-Przewidywany czas na wykonanie zadania 3-4h, lecz to nie wyścigi, nie siedzimy ze stoperem :P
-
-Powodzenia!
+2. Turns out that the `http://www.recipepuppy.com/api` doesn't support CORS, so I made a workaround for this issue. I call it through someone's CORS proxy site, so the URL I call is now `https://cors-anywhere.herokuapp.com/http://www.recipepuppy.com/api/?`. It can't be used in production environment (the proxy is not stable, can go down or overload at any moment), the best way to solve this is to make the request from the backend and forward the data to the browser, but I don't have any backend for this app.
