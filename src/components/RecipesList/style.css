@@ -10,8 +10,8 @@
 .recipeCard {
   margin: 10px;
   padding: 5px;
-  border: solid black 1px;
   justify-content: flex-start;
+  display: flex;
 }
 
 a {
@@ -19,10 +19,8 @@ a {
 }
 
 .column {
-  display: inline-block;
   margin: 5px;
   vertical-align: top;
-  flex: 1;
 }
 
 .image {

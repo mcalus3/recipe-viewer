@@ -1,6 +1,8 @@
 import React from 'react';
 import style from './style';
 import { actions } from '../../utils/stateManagement.js';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const RecipeCard = ({ recipe, dispatch, index }) => {
   function handleRecipeClick(ingredient) {
@@ -22,7 +24,7 @@ const RecipeCard = ({ recipe, dispatch, index }) => {
     </div>
   ));
   return (
-    <div className={style.recipeCard}>
+    <ListItem className={style.RecipeCard}>
       <div className={style.column}>
         <img src={recipe.thumbnail} alt="image" className={style.image} />
       </div>
@@ -31,7 +33,7 @@ const RecipeCard = ({ recipe, dispatch, index }) => {
         <br />
         ingredients: {ingredients}
       </div>
-    </div>
+    </ListItem>
   );
 };
 

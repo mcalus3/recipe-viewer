@@ -1,8 +1,17 @@
 import React, { useEffect } from 'react';
 import { actions } from '../../utils/stateManagement.js';
 import style from './style';
+import { createStyles, withStyles } from '@material-ui/core/styles';
 
-const SearchBar = ({ ingredients, queryState, dispatch }) => {
+const styles = theme =>
+  createStyles({
+    status: {
+      color: 'Gray',
+      fontSize: '12px'
+    }
+  });
+
+const SearchBar = ({ ingredients, queryState, dispatch, classes }) => {
   const ingredientsInput = React.createRef();
   function handleSubmit() {
     dispatch({
@@ -30,7 +39,7 @@ const SearchBar = ({ ingredients, queryState, dispatch }) => {
       <br />
       <input type="submit" value="get recipes!" />
       <br />
-      <label>query status: {queryState}</label>
+      <label className={classes.status}>query status: {queryState}</label>
     </form>
   );
 };
@@ -42,4 +51,4 @@ function splitIngredients(ingredients) {
     .map(i => i.trim());
 }
 
-export default SearchBar;
+export default withStyles(styles)(SearchBar);

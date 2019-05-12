@@ -2,6 +2,17 @@ import React, { useEffect, useReducer } from 'react';
 import style from './style';
 import { actions } from '../../utils/stateManagement.js';
 import RecipeCard from './RecipeCard.js';
+import { createStyles, withStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+
+const styles = theme =>
+  createStyles({
+    status: {
+      color: 'Gray',
+      fontSize: '12px'
+    }
+  });
 
 const RecipesList = ({ recipes, page, dispatch }) => {
   return recipes.length === 0 ? (
@@ -9,17 +20,21 @@ const RecipesList = ({ recipes, page, dispatch }) => {
   ) : (
     <div className={style.root}>
       Here are your recipes 👇
-      <div className={style.recipesList}>
+      <List>
         {recipes.map((recipe, index) => (
-          <RecipeCard
-            recipe={recipe}
-            dispatch={dispatch}
-            index={index + 1}
-            key={recipe.title + index}
-          />
+          <>
+            <Divider />
+            <RecipeCard
+              recipe={recipe}
+              dispatch={dispatch}
+              index={index + 1}
+              key={recipe.title + index}
+            />
+          </>
         ))}
-      </div>
-      Page: {page}
+        <Divider />
+      </List>
+      Page: {page}{' '}
       {page !== 1 ? (
         <a
           href="#"
@@ -50,4 +65,4 @@ const RecipesList = ({ recipes, page, dispatch }) => {
   );
 };
 
-export default RecipesList;
+export default withStyles(styles)(RecipesList);
